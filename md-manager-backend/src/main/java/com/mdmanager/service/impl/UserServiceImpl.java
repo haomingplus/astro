@@ -91,7 +91,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         BeanUtils.copyProperties(user, userVO);
 
         // 保存用户会话到Redis
-        redisUtils.saveUserSession(token, userVO);
+        redisUtils.saveUserSession(token, user.getId(), userVO);
 
         // 构建登录响应
         LoginVO loginVO = new LoginVO();
