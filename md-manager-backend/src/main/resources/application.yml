@@ -73,6 +73,30 @@ spring:
       # 请求最大大小
       max-request-size: 100MB
 
+  # Redis 配置
+  data:
+    redis:
+      # Redis服务器地址
+      host: localhost
+      # Redis端口
+      port: 6379
+      # Redis密码（没有密码则留空）
+      password:
+      # 数据库索引
+      database: 0
+      # 连接超时时间
+      timeout: 10000ms
+      lettuce:
+        pool:
+          # 最大连接数
+          max-active: 8
+          # 最大阻塞等待时间
+          max-wait: -1ms
+          # 最大空闲连接
+          max-idle: 8
+          # 最小空闲连接
+          min-idle: 0
+
   # Jackson配置
   jackson:
     # 日期格式
@@ -139,6 +163,34 @@ aliyun:
     bucket-name: your-bucket-name
     # 图片存储目录前缀
     image-dir: blog/images/
+
+# Knife4j API文档配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.mdmanager.controller
+
+knife4j:
+  # 开启增强模式
+  enable: true
+  # 开启生产环境屏蔽
+  production: false
+  setting:
+    # 语言
+    language: zh_cn
+    # 开启动态请求参数
+    enable-dynamic-parameter: true
+    # 开启调试
+    enable-debug: true
+    # 开启Host
+    enable-host: false
 
 # 日志配置
 logging:

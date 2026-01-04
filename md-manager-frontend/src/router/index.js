@@ -55,6 +55,12 @@ const routes = [
         name: 'TagList',
         component: () => import('@/views/tag/TagList.vue'),
         meta: { title: '标签管理' }
+      },
+      {
+        path: 'user',
+        name: 'UserList',
+        component: () => import('@/views/user/UserList.vue'),
+        meta: { title: '用户管理' }
       }
     ]
   },

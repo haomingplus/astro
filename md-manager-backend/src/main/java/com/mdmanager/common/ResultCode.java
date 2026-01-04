@@ -91,7 +91,22 @@ public enum ResultCode {
     /**
      * 标签名称重复
      */
-    TAG_NAME_EXISTS(3003, "标签名称已存在");
+    TAG_NAME_EXISTS(3003, "标签名称已存在"),
+
+    /**
+     * 数据不存在
+     */
+    DATA_NOT_EXIST(4001, "数据不存在"),
+
+    /**
+     * 用户名已存在
+     */
+    USERNAME_EXISTS(4002, "用户名已存在"),
+
+    /**
+     * 参数错误
+     */
+    PARAM_ERROR(4003, "参数错误");
 
     /**
      * 状态码

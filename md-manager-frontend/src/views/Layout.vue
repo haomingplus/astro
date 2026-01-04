@@ -38,6 +38,10 @@
           <el-icon><PriceTag /></el-icon>
           <template #title>标签管理</template>
         </el-menu-item>
+        <el-menu-item index="/user">
+          <el-icon><User /></el-icon>
+          <template #title>用户管理</template>
+        </el-menu-item>
       </el-menu>
     </el-aside>
 
@@ -59,6 +63,15 @@
         </div>
 
         <div class="header-right">
+          <!-- 主题切换 -->
+          <el-tooltip :content="themeTooltip" placement="bottom">
+            <el-icon class="theme-btn" @click="themeStore.toggleTheme">
+              <Sunny v-if="themeStore.themeSetting === 'light'" />
+              <Moon v-else-if="themeStore.themeSetting === 'dark'" />
+              <Monitor v-else />
+            </el-icon>
+          </el-tooltip>
+
           <!-- 用户信息 -->
           <el-dropdown @command="handleCommand">
             <span class="user-info">
@@ -92,7 +105,7 @@
  *
  * 提供整体页面布局，包含侧边栏导航和顶部用户信息
  */
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
 import {
@@ -100,19 +113,37 @@ import {
   EditPen,
   Upload,
   PriceTag,
+  User,
   Fold,
   Expand,
   UserFilled,
   ArrowDown,
-  SwitchButton
+  SwitchButton,
+  Sunny,
+  Moon,
+  Monitor
 } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/user'
+import { useThemeStore } from '@/store/theme'
 
 // 路由
 const route = useRoute()
 
 // 用户状态
 const userStore = useUserStore()
+
+// 主题状态
+const themeStore = useThemeStore()
+
+// 主题提示文本
+const themeTooltip = computed(() => {
+  const map = {
+    light: '当前：浅色主题',
+    dark: '当前：深色主题',
+    auto: '当前：跟随系统'
+  }
+  return map[themeStore.themeSetting] || '切换主题'
+})
 
 // 侧边栏折叠状态
 const isCollapse = ref(false)
@@ -151,6 +182,11 @@ const handleCommand = (command) => {
     }).catch(() => {})
   }
 }
+
+// 组件挂载时初始化主题
+onMounted(() => {
+  themeStore.initTheme()
+})
 </script>
 
 <style lang="scss" scoped>
@@ -211,6 +247,20 @@ const handleCommand = (command) => {
   }
 
   .header-right {
+    display: flex;
+    align-items: center;
+
+    .theme-btn {
+      font-size: 20px;
+      cursor: pointer;
+      margin-right: 20px;
+      color: #606266;
+
+      &:hover {
+        color: #409eff;
+      }
+    }
+
     .user-info {
       display: flex;
       align-items: center;

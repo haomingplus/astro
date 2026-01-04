@@ -27,6 +27,7 @@
         <jwt.version>0.12.3</jwt.version>
         <aliyun-oss.version>3.17.2</aliyun-oss.version>
         <hutool.version>5.8.22</hutool.version>
+        <knife4j.version>4.3.0</knife4j.version>
     </properties>
 
     <dependencies>
@@ -46,6 +47,19 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <!-- Spring Boot Redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!-- Knife4j API文档 -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+            <version>${knife4j.version}</version>
         </dependency>
 
         <!-- MyBatis-Plus 启动器 -->

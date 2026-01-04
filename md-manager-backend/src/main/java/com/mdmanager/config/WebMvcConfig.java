@@ -51,11 +51,18 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(jwtInterceptor)
                 // 拦截所有请求
                 .addPathPatterns("/api/**")
-                // 排除登录接口
+                // 排除不需要认证的接口
                 .excludePathPatterns(
                         "/api/auth/login",      // 登录接口
                         "/api/upload/image",    // 图片上传（编辑器使用，可根据需要调整）
-                        "/error"                // 错误页面
+                        "/error",               // 错误页面
+                        "/swagger-ui/**",       // Swagger UI
+                        "/swagger-ui.html",     // Swagger UI HTML
+                        "/swagger-resources/**",// Swagger 资源
+                        "/v3/api-docs/**",      // OpenAPI 文档
+                        "/webjars/**",          // WebJars 静态资源
+                        "/doc.html",            // Knife4j 文档
+                        "/favicon.ico"          // 网站图标
                 );
     }
 }
