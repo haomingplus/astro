@@ -194,7 +194,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 })
                 .collect(Collectors.toList());
 
-        return new PageResult<>(userVOList, userPage.getTotal());
+        return PageResult.of(userVOList, userPage.getTotal(), queryDTO.getPageNum(), queryDTO.getPageSize());
     }
 
     /**
