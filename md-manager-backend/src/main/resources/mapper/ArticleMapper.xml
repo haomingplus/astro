@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mdmanager.mapper.ArticleMapper">
+
+    <!-- 文章VO结果映射 -->
+    <resultMap id="ArticleVOResultMap" type="com.mdmanager.vo.ArticleVO">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="summary" property="summary"/>
+        <result column="file_name" property="fileName"/>
+        <result column="file_path" property="filePath"/>
+        <result column="cover_image" property="coverImage"/>
+        <result column="author" property="author"/>
+        <result column="status" property="status"/>
+        <result column="view_count" property="viewCount"/>
+        <result column="is_top" property="isTop"/>
+        <result column="publish_time" property="publishTime"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="tag_names" property="tagNames"/>
+        <!-- 标签列表通过单独查询获取 -->
+        <collection property="tags" ofType="com.mdmanager.entity.Tag"
+                    select="com.mdmanager.mapper.TagMapper.selectTagsByArticleId"
+                    column="id"/>
+    </resultMap>
+
+    <!-- 分页查询文章列表（包含标签信息） -->
+    <select id="selectArticlePageWithTags" resultMap="ArticleVOResultMap">
+        SELECT
+            a.id,
+            a.title,
+            a.summary,
+            a.file_name,
+            a.file_path,
+            a.cover_image,
+            a.author,
+            a.status,
+            a.view_count,
+            a.is_top,
+            a.publish_time,
+            a.create_time,
+            a.update_time,
+            GROUP_CONCAT(t.name SEPARATOR ',') AS tag_names
+        FROM t_article a
+        LEFT JOIN t_article_tag at ON a.id = at.article_id
+        LEFT JOIN t_tag t ON at.tag_id = t.id AND t.is_deleted = 0
+        WHERE a.is_deleted = 0
+        <!-- 关键词搜索 -->
+        <if test="keyword != null and keyword != ''">
+            AND a.title LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <!-- 标签筛选 -->
+        <if test="tagId != null">
+            AND a.id IN (
+                SELECT article_id FROM t_article_tag WHERE tag_id = #{tagId}
+            )
+        </if>
+        <!-- 状态筛选 -->
+        <if test="status != null">
+            AND a.status = #{status}
+        </if>
+        GROUP BY a.id
+        ORDER BY a.is_top DESC, a.create_time DESC
+    </select>
+
+    <!-- 查询文章详情（包含标签信息） -->
+    <select id="selectArticleDetailById" resultMap="ArticleVOResultMap">
+        SELECT
+            a.id,
+            a.title,
+            a.content,
+            a.summary,
+            a.file_name,
+            a.file_path,
+            a.cover_image,
+            a.author,
+            a.status,
+            a.view_count,
+            a.is_top,
+            a.publish_time,
+            a.create_time,
+            a.update_time,
+            GROUP_CONCAT(t.name SEPARATOR ',') AS tag_names
+        FROM t_article a
+        LEFT JOIN t_article_tag at ON a.id = at.article_id
+        LEFT JOIN t_tag t ON at.tag_id = t.id AND t.is_deleted = 0
+        WHERE a.id = #{id} AND a.is_deleted = 0
+        GROUP BY a.id
+    </select>
+
+</mapper>

@@ -1,0 +1,116 @@
+/**
+ * 全局样式文件
+ *
+ * 定义全局的CSS变量、通用样式等
+ */
+
+// CSS 变量
+:root {
+  // 主色调
+  --primary-color: #409eff;
+  --success-color: #67c23a;
+  --warning-color: #e6a23c;
+  --danger-color: #f56c6c;
+  --info-color: #909399;
+
+  // 文字颜色
+  --text-primary: #303133;
+  --text-regular: #606266;
+  --text-secondary: #909399;
+  --text-placeholder: #c0c4cc;
+
+  // 边框颜色
+  --border-color: #dcdfe6;
+  --border-light: #e4e7ed;
+
+  // 背景颜色
+  --bg-color: #f5f7fa;
+  --bg-white: #ffffff;
+
+  // 侧边栏宽度
+  --sidebar-width: 220px;
+
+  // 头部高度
+  --header-height: 60px;
+}
+
+// 全局样式
+body {
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+  background-color: var(--bg-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// 滚动条样式
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #c0c4cc;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f5f7fa;
+}
+
+// 通用类
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// 页面容器
+.page-container {
+  padding: 20px;
+  background-color: var(--bg-white);
+  border-radius: 4px;
+  min-height: calc(100vh - var(--header-height) - 40px);
+}
+
+// 页面标题
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+// 搜索表单
+.search-form {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: var(--bg-color);
+  border-radius: 4px;
+}
+
+// 表格操作列
+.table-actions {
+  .el-button {
+    padding: 0;
+    margin: 0 5px;
+  }
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mdmanager.mapper.TagMapper">
+
+    <!-- 查询所有标签（包含文章数量） -->
+    <select id="selectTagsWithArticleCount" resultType="com.mdmanager.entity.Tag">
+        SELECT
+            t.id,
+            t.name,
+            t.slug,
+            t.description,
+            t.sort_order,
+            t.create_time,
+            t.update_time,
+            COUNT(DISTINCT at.article_id) AS article_count
+        FROM t_tag t
+        LEFT JOIN t_article_tag at ON t.id = at.tag_id
+        LEFT JOIN t_article a ON at.article_id = a.id AND a.is_deleted = 0
+        WHERE t.is_deleted = 0
+        <!-- 关键词搜索 -->
+        <if test="keyword != null and keyword != ''">
+            AND t.name LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        GROUP BY t.id
+        ORDER BY t.sort_order ASC, t.create_time DESC
+    </select>
+
+</mapper>

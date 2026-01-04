@@ -1,0 +1,137 @@
+# ============================================
+# Markdown 文件管理系统配置文件
+# ============================================
+
+server:
+  # 服务端口
+  port: 8080
+  servlet:
+    # 上下文路径
+    context-path: /
+
+spring:
+  application:
+    # 应用名称
+    name: md-manager-backend
+
+  # 数据源配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/md_manager?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    # Druid 连接池配置
+    druid:
+      # 初始化连接数
+      initial-size: 5
+      # 最小空闲连接数
+      min-idle: 5
+      # 最大活跃连接数
+      max-active: 20
+      # 获取连接最大等待时间（毫秒）
+      max-wait: 60000
+      # 检测间隔（毫秒）
+      time-between-eviction-runs-millis: 60000
+      # 连接最小空闲时间（毫秒）
+      min-evictable-idle-time-millis: 300000
+      # 验证查询SQL
+      validation-query: SELECT 1
+      # 空闲时检测连接
+      test-while-idle: true
+      # 获取连接时检测
+      test-on-borrow: false
+      # 归还连接时检测
+      test-on-return: false
+      # 开启PSCache
+      pool-prepared-statements: true
+      # PSCache大小
+      max-pool-prepared-statement-per-connection-size: 20
+
+  # 文件上传配置
+  servlet:
+    multipart:
+      # 是否启用文件上传
+      enabled: true
+      # 单个文件最大大小
+      max-file-size: 50MB
+      # 请求最大大小
+      max-request-size: 100MB
+
+  # Jackson配置
+  jackson:
+    # 日期格式
+    date-format: yyyy-MM-dd HH:mm:ss
+    # 时区
+    time-zone: Asia/Shanghai
+    # 序列化配置
+    serialization:
+      # 禁止将日期转换为时间戳
+      write-dates-as-timestamps: false
+
+# MyBatis-Plus 配置
+mybatis-plus:
+  # Mapper XML文件位置
+  mapper-locations: classpath*:/mapper/**/*.xml
+  # 实体类包路径
+  type-aliases-package: com.mdmanager.entity
+  configuration:
+    # 驼峰命名映射
+    map-underscore-to-camel-case: true
+    # 日志输出（开发环境开启）
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      # 主键类型：自增
+      id-type: auto
+      # 逻辑删除字段
+      logic-delete-field: isDeleted
+      # 逻辑删除值
+      logic-delete-value: 1
+      # 逻辑未删除值
+      logic-not-delete-value: 0
+      # 表名前缀
+      table-prefix: t_
+
+# JWT 配置
+jwt:
+  # 密钥（生产环境请使用更复杂的密钥）
+  secret: md-manager-jwt-secret-key-2024-please-change-in-production
+  # 过期时间（毫秒）：24小时
+  expiration: 86400000
+  # Token前缀
+  token-prefix: Bearer
+  # 请求头名称
+  header: Authorization
+
+# 文件存储配置
+file:
+  # MD文件上传路径（Astro博客的content目录）
+  upload-path: /var/www/astro-blog/src/content/blog
+  # 允许的文件类型
+  allowed-types: md,markdown
+
+# 阿里云 OSS 配置
+aliyun:
+  oss:
+    # 端点
+    endpoint: oss-cn-hangzhou.aliyuncs.com
+    # AccessKey ID
+    access-key-id: your-access-key-id
+    # AccessKey Secret
+    access-key-secret: your-access-key-secret
+    # Bucket名称
+    bucket-name: your-bucket-name
+    # 图片存储目录前缀
+    image-dir: blog/images/
+
+# 日志配置
+logging:
+  level:
+    # 项目日志级别
+    com.mdmanager: debug
+    # MyBatis日志级别
+    com.mdmanager.mapper: debug
+  pattern:
+    # 控制台日志格式
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
