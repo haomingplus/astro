@@ -128,8 +128,9 @@ CREATE TABLE `t_operation_log` (
 
 -- 插入默认管理员用户
 -- 默认密码：admin123（使用BCrypt加密后的密码）
+-- 注意：如果使用后端DataInitializer自动创建用户，此SQL可跳过
 INSERT INTO `t_user` (`username`, `password`, `nickname`, `status`) VALUES
-('admin', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iKqILs9GwKpFhRVPtUMDXQcRQbZO', '系统管理员', 1);
+('admin', '$2a$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW', '系统管理员', 1);
 
 -- 插入默认标签
 INSERT INTO `t_tag` (`name`, `slug`, `description`, `sort_order`) VALUES
