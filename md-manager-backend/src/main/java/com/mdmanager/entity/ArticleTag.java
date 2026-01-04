@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * @since 1.0.0
  */
 @Data
-@TableName("article_tag")  // 表名会自动加上前缀 t_
+@TableName("t_article_tag")  // 表名会自动加上前缀 t_
 public class ArticleTag implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -18,9 +18,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/md_manager?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password: root
+    url: jdbc:mysql://rm-2ze1189z1j6o5ke7dno.mysql.rds.aliyuncs.com:3306/md_manager?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: lzwltx_root
+    password: lzwltx@0116#*123
     # Druid 连接池配置
     druid:
       # 初始化连接数
@@ -47,6 +47,21 @@ spring:
       pool-prepared-statements: true
       # PSCache大小
       max-pool-prepared-statement-per-connection-size: 20
+
+  # Redis 配置
+  data:
+    redis:
+      host: r-2zeitt3tw8ceuqs5fcpd.redis.rds.aliyuncs.com
+      port: 6379
+      password: redis_prod:redis_prod123@
+      database: 0
+      timeout: 10000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-wait: -1ms
+          max-idle: 8
+          min-idle: 0
 
   # 文件上传配置
   servlet:
